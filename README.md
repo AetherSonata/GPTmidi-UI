@@ -1,4 +1,4 @@
-<h1>GPTmidi UI by NAME</h1>
+<h1>GPTmidi UI by AetherSonata</h1>
 
 
 <p>A simple User Interface for creating, previewing and saving .mid files using ChatGPT and other LLMs</p>
