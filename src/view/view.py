@@ -63,8 +63,10 @@ class StartPage(tk.Frame):
 
         generate_midi_button = tk.Button(self.footer_frame, text="Generate MIDI", command=lambda: controller.show_frame("Processed_Text") )
         upload_example_button = tk.Button(self.footer_frame, text="Upload Example")
+        change_instruction_button = tk.Button(self.footer_frame, text="Change Instruction")
         generate_midi_button.pack(side=tk.LEFT, padx=10, pady=5)
         upload_example_button.pack(side=tk.LEFT, padx=10, pady=5)
+        change_instruction_button.pack(side="right", padx=10, pady=5)
 
 
 if __name__ == "__main__":
