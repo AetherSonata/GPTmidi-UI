@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 
 
 class Settings(tk.Frame):
@@ -20,15 +21,36 @@ class Settings(tk.Frame):
         button_frame = tk.Frame(self.header_frame)
         button_frame.pack(side="top", fill="x")
 
-        button = tk.Button(button_frame, text="Go to the start page", command=lambda: controller.show_frame("StartPage"))
-        button.pack(side="left", padx=10, pady=5)
 
-        text_widget = tk.Text(self.body_frame, state=tk.NORMAL)
-        text_widget.insert(tk.END, "Settings Content")
-        text_widget.configure(state=tk.DISABLED)
-        text_widget.pack(expand=True, fill=tk.BOTH)
+        settings_body = tk.Frame(self.body_frame)
+        settings_body.pack(expand=True, fill=tk.BOTH, padx=10, pady=5)
 
-        generate_midi_button = tk.Button(self.footer_frame, text="Generate MIDI")
-        upload_example_button = tk.Button(self.footer_frame, text="Upload Example")
+        # Add the settings content
+        self.add_setting_entry(settings_body, "Save PATH")
+        self.add_setting_entry(settings_body, "Save Filename")
+        self.add_setting_entry(settings_body, "Insert Your ChatGPT API KEY", long_text=True)
+        self.add_setting_entry(settings_body, "Custom Deep Instruction (Advanced)")
+
+        generate_midi_button = tk.Button(self.footer_frame, text="Go to the start page", command=lambda: controller.show_frame("GPTmidi"))
+        upload_example_button = tk.Button(self.footer_frame, text="Load From File")
         generate_midi_button.pack(side=tk.LEFT, padx=10, pady=5)
-        upload_example_button.pack(side=tk.LEFT, padx=10, pady=5)
+        upload_example_button.pack(side=tk.RIGHT, padx=10, pady=5)
+
+    def add_setting_entry(self, settings_body, text, long_text=False):
+        entry_frame = tk.Frame(settings_body)
+        entry_frame.pack(side=tk.TOP, fill=tk.X, pady=5)
+
+        label = tk.Label(entry_frame, text=text, anchor=tk.W)
+        label.pack(side=tk.LEFT, padx=5)
+
+        if long_text:
+            entry = tk.Text(entry_frame, width=30, height=5)
+            entry.pack(side=tk.LEFT, padx=5)
+        else:
+            entry = tk.Entry(entry_frame)
+            entry.pack(side=tk.LEFT, padx=5)
+
+        save_button = tk.Button(entry_frame, text="Save")
+        save_button.pack(side=tk.LEFT, padx=5)
+
+

@@ -20,7 +20,7 @@ class Processed_Text(tk.Frame):
         button_frame = tk.Frame(self.header_frame)
         button_frame.pack(side="top", fill="x")
 
-        button = tk.Button(button_frame, text="Go to the start page", command=lambda: controller.show_frame("StartPage"))
+        button = tk.Button(button_frame, text="Go to the start page", command=lambda: controller.show_frame("GPTmidi"))
         button.pack(side="left", padx=10, pady=5)
 
         text_widget = tk.Text(self.body_frame, state=tk.NORMAL)

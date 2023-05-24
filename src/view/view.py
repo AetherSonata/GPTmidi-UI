@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import font as tkfont
-from view_mode_gptmidi import PageOne
+from view_mode_gptmidi import GPTmidi
 from view_mode_midi_to_text import Midi_to_Text
 from view_settings import Settings
 from view_processed_text import Processed_Text
@@ -18,7 +18,7 @@ class SampleApp(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (StartPage, Settings, Processed_Text, Text_to_Midi, Midi_to_Text):
+        for F in (StartPage, Settings, Processed_Text, Text_to_Midi, Midi_to_Text, GPTmidi):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
