@@ -1,5 +1,4 @@
-midiutil
-miditoolkit
+mido
 scipy
 numpy
 matplotlib
