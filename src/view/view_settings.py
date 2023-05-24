@@ -1,7 +1,7 @@
 import tkinter as tk
 
 
-class Midi_to_Text(tk.Frame):
+class Settings(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
@@ -14,7 +14,7 @@ class Midi_to_Text(tk.Frame):
         self.body_frame.pack(expand=True, fill=tk.BOTH)
         self.footer_frame.pack(fill=tk.X, side=tk.BOTTOM)
 
-        label = tk.Label(self.header_frame, text="Midi Converted Successfully", font=controller.title_font)
+        label = tk.Label(self.header_frame, text="Settings", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
 
         button_frame = tk.Frame(self.header_frame)
@@ -24,11 +24,11 @@ class Midi_to_Text(tk.Frame):
         button.pack(side="left", padx=10, pady=5)
 
         text_widget = tk.Text(self.body_frame, state=tk.NORMAL)
-        text_widget.insert(tk.END, "insert midi text here")
+        text_widget.insert(tk.END, "Settings Content")
         text_widget.configure(state=tk.DISABLED)
         text_widget.pack(expand=True, fill=tk.BOTH)
 
-        generate_midi_button = tk.Button(self.footer_frame, text="Convert to MIDI", command=lambda: controller.show_frame("Processed_Text"))
+        generate_midi_button = tk.Button(self.footer_frame, text="Generate MIDI")
         upload_example_button = tk.Button(self.footer_frame, text="Upload Example")
         generate_midi_button.pack(side=tk.LEFT, padx=10, pady=5)
         upload_example_button.pack(side=tk.LEFT, padx=10, pady=5)

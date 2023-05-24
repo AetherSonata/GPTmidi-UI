@@ -1,0 +1,6 @@
+midiutil
+miditoolkit
+scipy
+numpy
+matplotlib
+pyperclip
