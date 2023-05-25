@@ -1,13 +1,16 @@
+import os
+import subprocess
+from model.text_to_midi_converter import convert_text_to_midi
+import tkinter.messagebox as messagebox
 import tkinter as tk
 from tkinter import font
-import tkinter.messagebox as messagebox
-
 
 
 class Controller:
     def __init__(self, view, preferences):
         self.view = view
         self.preferences = preferences
+        self.output_path = None
 
         # Assign handler functions to buttons
         self.view.button_settings.config(command=self.handle_settings)
@@ -18,6 +21,8 @@ class Controller:
         self.view.button_clear.config(command=self.handle_clear)
         self.view.button_paste.config(command=self.handle_paste)
         self.view.button_copy.config(command=self.handle_copy)
+        self.view.button_open_folder.config(command=self.handle_open_in_folder)
+        self.view.button_preview_midi.config(command=self.handle_preview_midi)
 
     def handle_settings(self):
         # Add code to handle settings button click here
@@ -28,7 +33,6 @@ class Controller:
         print("Generate from Prompt button clicked")
 
     def handle_convert_text_to_midi(self):
-        # ToDo fix the damn circular import error and put the function handle_text_to_midi_conversion back in model.py where it belongs
         # Add code to handle convert text to MIDI button click here
         self.view.text_widget.tag_add("sel", "1.0", "end")
         sel_start = self.view.text_widget.index("sel.first")
@@ -39,27 +43,24 @@ class Controller:
             file_name = self.preferences["file_name"]
             save_folder = self.preferences["save_folder"]
 
-            import os
-            
-            # Convert text to MIDI using the converter function
             file_number = 1
             while os.path.exists(os.path.join(save_folder, f"{file_name}{file_number}.mid")):
                 file_number += 1
-            # Generate the output file name with the unique number
+
             output_filename = f"{file_name}{file_number}.mid"
             output_path = os.path.join(save_folder, output_filename)
 
             if not os.path.exists(save_folder):
                 os.makedirs(save_folder)
 
-            from model.text_to_midi_converter import convert_text_to_midi 
+            self.output_path = output_path
+
             convert_text_to_midi(text, output_path)
             print("File saved:", output_path)
         else:
             print("No text selected or selection is empty.")
 
         print("Convert Text to MIDI button clicked")
-
 
     def handle_convert_midi_to_text(self):
         # Add code to handle convert MIDI to text button click here
@@ -92,3 +93,23 @@ class Controller:
         else:
             messagebox.showinfo("Error", "No text selected.")
 
+    def handle_open_in_folder(self):
+        # Add code to open and select the last created file in the folder if existent
+        if self.output_path and os.path.exists(self.output_path):
+            subprocess.Popen(f'explorer /select,"{self.output_path}"')
+        else:
+            print("Output path not found.")
+
+    def handle_preview_midi(self):
+        # Add code to handle preview MIDI button click here
+        if self.output_path and os.path.exists(self.output_path):
+            # Add code to preview the MIDI file
+            print("Previewing MIDI:", self.output_path)
+        else:
+            print("Output path not found.")
+
+    def get_output_path(self):
+        return self.output_path
+
+    def set_output_path(self, output_path):
+        self.output_path = output_path
