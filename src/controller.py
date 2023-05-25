@@ -1,10 +1,10 @@
 import os
 import subprocess
 from model.text_to_midi_converter import convert_text_to_midi
+from model.midi_utils import play_midi
 import tkinter.messagebox as messagebox
 import tkinter as tk
 from tkinter import font
-
 
 class Controller:
     def __init__(self, view, preferences):
@@ -103,7 +103,7 @@ class Controller:
     def handle_preview_midi(self):
         # Add code to handle preview MIDI button click here
         if self.output_path and os.path.exists(self.output_path):
-            # Add code to preview the MIDI file
+            play_midi(self.output_path)
             print("Previewing MIDI:", self.output_path)
         else:
             print("Output path not found.")
