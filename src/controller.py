@@ -13,6 +13,7 @@ class Controller:
         self.view = view
         self.preferences = preferences
         self.output_path = None
+        self.example_prompt = None
 
         # Assign handler functions to buttons
         self.view.button_settings.config(command=self.handle_settings)
@@ -33,6 +34,7 @@ class Controller:
     def handle_generate_from_prompt(self):
         # Add code to handle generate from prompt button click here
         print("Generate from Prompt button clicked")
+        self.example_prompt = None
 
     def handle_convert_text_to_midi(self):
         # Add code to handle convert text to MIDI button click here
@@ -63,6 +65,7 @@ class Controller:
             print("No text selected or selection is empty.")
 
         print("Convert Text to MIDI button clicked")
+        self.example_prompt = None
 
     def handle_convert_midi_to_text(self):
         # Open file dialog to select a MIDI file
@@ -87,13 +90,36 @@ class Controller:
         else:
             print("No MIDI file selected.")
 
+        self.example_prompt = None
+
     def handle_upload_example_midi(self):
-        # Add code to handle upload example MIDI button click here
+        # Open file dialog to select a MIDI file
+        selected_file_path = filedialog.askopenfilename(
+            initialdir=self.preferences["save_folder"],
+            title="Select MIDI file",
+            filetypes=[("MIDI Files", "*.mid"), ("All Files", "*.*")]
+        )
+
+        # Pass the selected file path to convert_midi_to_text
+        if selected_file_path:
+            text = convert_midi_to_text(selected_file_path)
+
+            # Insert "MIDI (midi file name) Example Uploaded" after User Input Prompt
+            self.view.text_widget.insert(tk.END, f"\nMIDI ({os.path.basename(selected_file_path)}) Example Uploaded")
+
+            # Set Example Prompt text to example prompt after successful conversion.
+            self.example_prompt = self.view.text_widget.get("1.0", tk.END)
+
+            print("Upload Example MIDI button clicked")
+        else:
+            print("No MIDI file selected.")
+
         print("Upload Example MIDI button clicked")
 
     def handle_clear(self):
         # Add code to handle clear button click here
         self.view.text_widget.delete("1.0", tk.END)
+        self.example_prompt = None
         print("Clear button clicked")
 
     def handle_paste(self):

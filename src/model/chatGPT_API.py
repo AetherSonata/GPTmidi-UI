@@ -3,7 +3,7 @@ import requests
 
 class GPTAPI:
 
-    def sendRequest(self, instruction_text, user_prompt,  deep_instruction, api_key, temperature):
+    def sendRequest(self, instruction_text, user_prompt, example_prompt, deep_instruction, api_key, temperature):
         self.api_key = api_key
         self.temperature = temperature
 
@@ -14,7 +14,7 @@ class GPTAPI:
         }
         data = {
             "model": "gpt-3.5-turbo",
-            "messages": [{"role": "user", "content": instruction_text + user_prompt + deep_instruction}],
+            "messages": [{"role": "user", "content": instruction_text + user_prompt + example_prompt + deep_instruction}],
             "temperature": temperature
         }
         response = requests.post(url, headers=headers, json=data)
