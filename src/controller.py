@@ -80,6 +80,9 @@ class Controller:
             self.view.text_widget.delete("1.0", tk.END)
             self.view.text_widget.insert("1.0", text)
 
+            # Update the output path with the selected file path
+            self.output_path = selected_file_path
+
             print("Convert MIDI to Text button clicked")
         else:
             print("No MIDI file selected.")
