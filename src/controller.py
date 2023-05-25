@@ -5,6 +5,8 @@ from model.midi_utils import play_midi
 import tkinter.messagebox as messagebox
 import tkinter as tk
 from tkinter import font
+from tkinter import filedialog
+from model.midi_to_text_converter import convert_midi_to_text
 
 class Controller:
     def __init__(self, view, preferences):
@@ -63,8 +65,24 @@ class Controller:
         print("Convert Text to MIDI button clicked")
 
     def handle_convert_midi_to_text(self):
-        # Add code to handle convert MIDI to text button click here
-        print("Convert MIDI to Text button clicked")
+        # Open file dialog to select a MIDI file
+        selected_file_path = filedialog.askopenfilename(
+            initialdir=self.preferences["save_folder"],
+            title="Select MIDI file",
+            filetypes=[("MIDI Files", "*.mid"), ("All Files", "*.*")]
+        )
+
+        # Pass the selected file path to convert_midi_to_text
+        if selected_file_path:
+            text = convert_midi_to_text(selected_file_path)
+
+            # Insert the converted text into the input field
+            self.view.text_widget.delete("1.0", tk.END)
+            self.view.text_widget.insert("1.0", text)
+
+            print("Convert MIDI to Text button clicked")
+        else:
+            print("No MIDI file selected.")
 
     def handle_upload_example_midi(self):
         # Add code to handle upload example MIDI button click here

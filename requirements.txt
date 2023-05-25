@@ -1,6 +1,10 @@
+python
+json
 mido
 scipy
 numpy
 matplotlib
 pyperclip
 pygame
+requests
+openai

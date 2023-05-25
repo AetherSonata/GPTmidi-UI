@@ -1,7 +1,5 @@
 import mido
 
-
-
 def convert_text_to_midi(text, output_filename):
     # Create a new MIDI file
     midi_file = mido.MidiFile(ticks_per_beat=480, type=1)
