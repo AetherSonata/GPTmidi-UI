@@ -59,12 +59,13 @@ class Controller:
 
             self.output_path = output_path
 
-            convert_text_to_midi(text, output_path)
-            print("File saved:", output_path)
+            successful = convert_text_to_midi(text, output_path)
+            if successful == 1:
+                print("File saved:", output_path)
         else:
             print("No text selected or selection is empty.")
 
-        print("Convert Text to MIDI button clicked")
+        #reset example prompt
         self.example_prompt = None
 
     def handle_convert_midi_to_text(self):
