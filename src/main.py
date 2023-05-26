@@ -1,17 +1,15 @@
 import tkinter as tk
 from view.view import View
 from controller import Controller
+from model.settings import Preferences
 
 def main():
     root = tk.Tk()
     root.title("AI MIDI Generation")
     root.geometry("800x600")
     
-#ToDo create function for loading preferences from file at Startup
-    preferences = {
-    "save_folder": ".\output",
-    "file_name": "output"
-}
+    Preferences.write_default_preferences()
+    preferences = Preferences.load_preferences()
 
     view = View(root)
     view.pack(expand=True, fill=tk.BOTH)

@@ -29,7 +29,7 @@ class GPTAPI:
 
         return response
 
-    def cleanResponse(self, response):
+    def extractContent(self, response):
         try:
             # Parse the JSON response
             json_response = json.loads(response)
@@ -58,7 +58,7 @@ def main():
     gpt_api = GPTAPI()
     json_response = gpt_api.sendRequest(instruction_text, user_prompt, example_midi, deep_instruction, api_key, temperature)
     if json_response is not None:
-        answer = gpt_api.cleanResponse(json_response)
+        answer = gpt_api.extractContent(json_response)
         if answer is not None:
             print(answer)
 

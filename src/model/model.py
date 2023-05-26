@@ -1,6 +1,5 @@
 
 
-
 class Model:
     @staticmethod
     #ToDo fix the damn circular import error!
