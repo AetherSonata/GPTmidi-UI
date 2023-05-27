@@ -4,14 +4,15 @@ from model.text_to_midi_converter import convert_text_to_midi
 from model.midi_utils import play_midi
 import tkinter.messagebox as messagebox
 import tkinter as tk
-from tkinter import font
 from tkinter import filedialog
 from model.midi_to_text_converter import convert_midi_to_text
+from view.view_settings import SettingsView
+
 
 class Controller:
-    def __init__(self, view, preferences):
+    def __init__(self, view, loaded_preferences):
         self.view = view
-        self.preferences = preferences
+        self.preferences = loaded_preferences
         self.output_path = None
         self.example_prompt = None
 
@@ -28,8 +29,11 @@ class Controller:
         self.view.button_preview_midi.config(command=self.handle_preview_midi)
 
     def handle_settings(self):
-        # Add code to handle settings button click here
-        print("Settings button clicked")
+        settings_window = tk.Toplevel(self.view)
+        settings_window.title("Settings")
+        settings_window.geometry("400x400")
+        settings_view = SettingsView(settings_window)
+        settings_view.pack(expand=True, fill=tk.BOTH)
 
     def handle_generate_from_prompt(self):
         # Add code to handle generate from prompt button click here
@@ -65,7 +69,7 @@ class Controller:
         else:
             print("No text selected or selection is empty.")
 
-        #reset example prompt
+        # Reset example prompt
         self.example_prompt = None
 
     def handle_convert_midi_to_text(self):
@@ -161,3 +165,5 @@ class Controller:
 
     def set_output_path(self, output_path):
         self.output_path = output_path
+
+

@@ -1,56 +1,66 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import font
 
-
-class Settings(tk.Frame):
-    def __init__(self, parent, controller):
+class SettingsView(tk.Frame):
+    def __init__(self, parent):
         tk.Frame.__init__(self, parent)
-        self.controller = controller
+
+        self.label_font = font.Font(size=16)
 
         self.header_frame = tk.Frame(self)
         self.body_frame = tk.Frame(self)
         self.footer_frame = tk.Frame(self)
 
-        self.header_frame.pack(fill=tk.X)
+        self.header_frame.pack(fill=tk.X, padx=30)
         self.body_frame.pack(expand=True, fill=tk.BOTH)
-        self.footer_frame.pack(fill=tk.X, side=tk.BOTTOM)
+        self.footer_frame.pack(fill=tk.X, side=tk.BOTTOM, pady=20)
 
-        label = tk.Label(self.header_frame, text="Settings", font=controller.title_font)
+        label = tk.Label(self.header_frame, text="Settings", font=self.label_font)
         label.pack(side="top", fill="x", pady=10)
 
-        button_frame = tk.Frame(self.header_frame)
-        button_frame.pack(side="top", fill="x")
+        description_texts = [
+            "Save Folder:",
+            "File Name:",
+            "API Key:"
+        ]
 
+        self.descriptions = []
+        self.new_items = []
 
-        settings_body = tk.Frame(self.body_frame)
-        settings_body.pack(expand=True, fill=tk.BOTH, padx=10, pady=5)
+        for text in description_texts:
+            description_frame = tk.Frame(self.body_frame)
+            description_frame.pack(fill=tk.X, pady=5, padx=20)
 
-        # Add the settings content
-        self.add_setting_entry(settings_body, "Save PATH")
-        self.add_setting_entry(settings_body, "Save Filename")
-        self.add_setting_entry(settings_body, "Insert Your ChatGPT API KEY", long_text=True)
-        self.add_setting_entry(settings_body, "Custom Deep Instruction (Advanced)")
+            description_label = tk.Label(description_frame, text=text, anchor=tk.W, width=25)
+            description_label.pack(side=tk.LEFT)
 
-        generate_midi_button = tk.Button(self.footer_frame, text="Go to the start page", command=lambda: controller.show_frame("GPTmidi"))
-        upload_example_button = tk.Button(self.footer_frame, text="Load From File")
-        generate_midi_button.pack(side=tk.LEFT, padx=10, pady=5)
-        upload_example_button.pack(side=tk.RIGHT, padx=10, pady=5)
+            description_entry = tk.Entry(description_frame)
+            description_entry.pack(side=tk.RIGHT, padx=10)
 
-    def add_setting_entry(self, settings_body, text, long_text=False):
-        entry_frame = tk.Frame(settings_body)
-        entry_frame.pack(side=tk.TOP, fill=tk.X, pady=5)
+            self.descriptions.append(description_label)
+            self.new_items.append(description_entry)
+            
+        checkbox_frame = tk.Frame(self.body_frame)
+        checkbox_frame.pack(fill=tk.X, padx=20)
+        
+        auto_show_checkbox = tk.Checkbutton(checkbox_frame, text="Auto Show", font=self.label_font)
+        auto_show_checkbox.pack(side=tk.LEFT, padx=10, pady=5)
+        
+        button_frame = tk.Frame(self.body_frame)
+        button_frame.pack(fill=tk.X, padx=20)
 
-        label = tk.Label(entry_frame, text=text, anchor=tk.W)
-        label.pack(side=tk.LEFT, padx=5)
+        instructions_button = tk.Button(button_frame, text="Edit Instructions", font=self.label_font, command=lambda: edit_instructions() )
+        instructions_button.pack(side=tk.LEFT, padx=0, pady=5)        
 
-        if long_text:
-            entry = tk.Text(entry_frame, width=30, height=5)
-            entry.pack(side=tk.LEFT, padx=5)
-        else:
-            entry = tk.Entry(entry_frame)
-            entry.pack(side=tk.LEFT, padx=5)
+        save_exit_button = tk.Button(self.footer_frame, text="Save & Exit", font=self.label_font, command=lambda: save_and_exit())
+        save_exit_button.pack(side=tk.LEFT, padx=10, pady=5)
 
-        save_button = tk.Button(entry_frame, text="Save")
-        save_button.pack(side=tk.LEFT, padx=5)
+        back_button = tk.Button(self.footer_frame, text="Back", font=self.label_font)
+        back_button.pack(side=tk.LEFT, padx=10, pady=5)
 
+        def edit_instructions():
+            print("edit istruction pressed")
 
+        def save_and_exit():
+            print("save and exit pressed")
+            self.master.destroy()            
