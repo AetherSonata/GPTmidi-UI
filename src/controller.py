@@ -15,6 +15,7 @@ class Controller:
         self.preferences = loaded_preferences
         self.output_path = None
         self.example_prompt = None
+  
 
         # Assign handler functions to buttons
         self.view.button_settings.config(command=self.handle_settings)
@@ -32,7 +33,7 @@ class Controller:
         settings_window = tk.Toplevel(self.view)
         settings_window.title("Settings")
         settings_window.geometry("400x400")
-        settings_view = SettingsView(settings_window)
+        settings_view = SettingsView(settings_window, self.preferences)
         settings_view.pack(expand=True, fill=tk.BOTH)
 
     def handle_generate_from_prompt(self):
